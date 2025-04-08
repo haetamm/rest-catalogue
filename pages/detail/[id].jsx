@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import React from 'react';
 import PropTypes from 'prop-types';
+import { fetchRestaurantDetail, fetchRestaurantList } from '@/lib/api';
 
 const Detail = ({ restaurant }) => {
   const {
@@ -70,8 +71,7 @@ export default Detail;
 
 export const getStaticPaths = async () => {
   // call an external API endpoint to get ids of restaurants
-  const response = await fetch('https://restaurant-api.dicoding.dev/list');
-  const { restaurants } = await response.json();
+  const restaurants = await fetchRestaurantList();
   const ids = restaurants.map((restaurant) => restaurant.id);
 
   // Get the paths we want to pre-render based on ids
@@ -83,10 +83,7 @@ export const getStaticPaths = async () => {
 
 export async function getStaticProps({ params }) {
   // Fetch necessary data for the restaurant detail page using params.id
-  const response = await fetch(
-    `https://restaurant-api.dicoding.dev/detail/${params.id}`
-  );
-  const { restaurant } = await response.json();
+  const restaurant = await fetchRestaurantDetail(params.id);
 
   return {
     props: {

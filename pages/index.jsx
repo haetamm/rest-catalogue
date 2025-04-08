@@ -1,6 +1,7 @@
 import RestaurantList from '@/components/RestaurantList';
 import React from 'react';
 import PropTypes from 'prop-types';
+import { fetchRestaurantList } from '@/lib/api';
 
 const Home = ({ restaurants }) => {
   return (
@@ -26,9 +27,7 @@ Home.propTypes = {
 export default Home;
 
 export const getStaticProps = async () => {
-  const response = await fetch('https://restaurant-api.dicoding.dev/list');
-  const { restaurants } = await response.json();
-
+  const restaurants = await fetchRestaurantList();
   return {
     props: {
       restaurants,
