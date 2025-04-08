@@ -72,7 +72,7 @@ export default Detail;
 
 // 👇 ISR: Static generation + auto update content in background
 export async function getStaticPaths() {
-  const restaurants = fetchRestaurantList();
+  const { restaurants } = fetchRestaurantList();
 
   const paths = restaurants.map((r) => ({
     params: { id: r.id },
