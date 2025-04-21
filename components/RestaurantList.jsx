@@ -1,14 +1,30 @@
-import React from 'react';
-import RestaurantItem from './RestaurantItem';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { ListRest } from './styled/ListRest';
+import RestaurantCard from './RestaurantCard';
+import { LoadingSpinner } from './styled/LoadingSpinner';
 
 const RestaurantList = ({ restaurants }) => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+  }, []);
+
   return (
-    <div className="grid">
-      {restaurants.map((restaurant) => (
-        <RestaurantItem key={restaurant.id} {...restaurant} />
-      ))}
-    </div>
+    <>
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        <ListRest>
+          {restaurants.map((restaurant) => (
+            <RestaurantCard key={restaurant.id} {...restaurant} />
+          ))}
+        </ListRest>
+      )}
+    </>
   );
 };
 

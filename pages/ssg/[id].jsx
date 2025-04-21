@@ -1,6 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { fetchRestaurantDetail, fetchRestaurantList } from '@/lib/api';
+import PropTypes from 'prop-types';
 import RestaurantDetailContent from '@/components/RestaurantDetailContent';
 
 const Detail = ({ restaurant }) => {
@@ -17,30 +17,22 @@ Detail.propTypes = {
 
 export default Detail;
 
-// 👇 ISR: Incremental Static Regeneration
+// SSG : Static site generation
 export const getStaticPaths = async () => {
   const restaurants = await fetchRestaurantList();
   const paths = restaurants.map((r) => ({ params: { id: r.id } }));
 
   return {
     paths,
-    fallback: 'blocking',
+    fallback: false,
   };
 };
 
-export const getStaticProps = async ({ params }) => {
+export async function getStaticProps({ params }) {
   const restaurant = await fetchRestaurantDetail(params.id);
-
-  if (!restaurant) {
-    return {
-      notFound: true,
-    };
-  }
-
   return {
     props: {
       restaurant,
     },
-    revalidate: 60, // ⏱ regenerate halaman tiap 60 detik (kalau ada request)
   };
-};
+}

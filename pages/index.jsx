@@ -2,13 +2,16 @@ import RestaurantList from '@/components/RestaurantList';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { fetchRestaurantList } from '@/lib/api';
+import Layout from '@/components/layouts/index';
+import TitleContainer from '@/components/styled/TitleContainer';
 
 const Home = ({ restaurants }) => {
   return (
     <>
-      <div className="container">
+      <Layout>
+        <TitleContainer>List Restaurant</TitleContainer>
         <RestaurantList restaurants={restaurants} />
-      </div>
+      </Layout>
     </>
   );
 };

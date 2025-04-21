@@ -1,9 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-   images: {
+  images: {
     domains: ['restaurant-api.dicoding.dev'],
   },
+  compiler: {
+    styledComponents: true
+  }
 };
 
 export default nextConfig;
