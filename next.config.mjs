@@ -11,26 +11,12 @@ const nextConfig = {
 
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
-
 const withPWA = require('next-pwa')({
-  dest: 'public',
-  register: true,
-  skipWaiting: true,
-  disable: process.env.NODE_ENV === 'development',
-
-  runtimeCaching: [
-    {
-      urlPattern: /\.(?:png|jpg|jpeg|svg|gif|webp)$/,
-      handler: 'CacheFirst',
-      options: {
-        cacheName: 'images',
-        expiration: {
-          maxEntries: 30,
-          maxAgeSeconds: 60 * 60 * 24 * 30,
-        },
-      },
-    },
-  ],
+  dest: 'public', // Output directory for service worker files
+  register: true, // Automatically register service worker
+  skipWaiting: true, // Make new service worker active immediately
+  disable: process.env.NODE_ENV === 'development', // Disable PWA in development
 });
 
+// Export wrapped config
 export default withPWA(nextConfig);
