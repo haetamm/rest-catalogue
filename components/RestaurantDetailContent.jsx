@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Layout from '@/components/layouts/index';
 import TitleContainer from '@/components/styled/TitleContainer';
 import DetailRestaurant from '@/components/DetailRestaurant';
 import Menus from '@/components/Menus';
 import Review from '@/components/Review';
+import FormReview from './FormReview';
 
 const RestaurantDetailContent = ({ restaurant }) => {
   const {
+    id,
     name,
     description,
     pictureId,
@@ -15,9 +17,14 @@ const RestaurantDetailContent = ({ restaurant }) => {
     city,
     rating,
     address,
-    customerReviews,
+    customerReviews: initialReviews,
     menus: { foods, drinks },
   } = restaurant;
+
+  const [customerReviews, setCustomerReviews] = useState(initialReviews);
+  const handleReviewAdded = (newReviews) => {
+    setCustomerReviews(newReviews);
+  };
 
   return (
     <Layout>
@@ -33,12 +40,14 @@ const RestaurantDetailContent = ({ restaurant }) => {
       />
       <Menus foods={foods} drinks={drinks} />
       <Review customerReviews={customerReviews} />
+      <FormReview id={id} onReviewAdded={handleReviewAdded} />
     </Layout>
   );
 };
 
 RestaurantDetailContent.propTypes = {
   restaurant: PropTypes.shape({
+    id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     pictureId: PropTypes.string.isRequired,

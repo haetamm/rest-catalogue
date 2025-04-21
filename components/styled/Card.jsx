@@ -15,7 +15,6 @@ export const ImgContainer = styled.div`
   overflow: hidden;
   transition: transform 0.5s ease;
   max-height: 600px;
-  min-height: 200px; /* Biar kartu ga mengkerut */
   border-top-left-radius: 1em;
   border-top-right-radius: 1em;
 
@@ -45,6 +44,14 @@ export const ImgRes = styled.img`
 
   ${ImgContainer}:hover & {
     transform: scale(1.1);
+  }
+
+  @media (max-width: 767px) {
+    min-height: 200px;
+  }
+
+  @media (min-width: 768px) {
+    min-height: 287px;
   }
 `;
 

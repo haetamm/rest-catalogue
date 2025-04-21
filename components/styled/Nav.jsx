@@ -11,9 +11,10 @@ export const Nav = styled.nav`
   height: 75px;
   font-family: 'Unica One', cursive;
   width: 100%;
-  box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
   background-color: ${({ isScrolled }) =>
     isScrolled ? 'var(--primary-color)' : 'transparent'};
+  box-shadow: ${({ isScrolled }) =>
+    isScrolled ? 'rgba(33, 35, 38, 0.1) 0px 10px 10px -10px' : 'none'};
   transition: background-color 0.3s ease; /* Smooth transition for background */
 
   @media only screen and (max-width: 600px) {

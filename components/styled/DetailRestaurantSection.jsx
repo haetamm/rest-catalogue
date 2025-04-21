@@ -28,13 +28,18 @@ export const ImgRes2 = styled.img`
   object-fit: cover;
   height: 100%;
   width: 100%;
-  min-height: 200px; /* Biar ga mengkerut */
+  min-height: 200px;
+  min-width: 100%;
   border-bottom-left-radius: 3em;
   border-top-right-radius: 3em;
   border: 1em solid var(--secondary-color);
 
-  @media (max-width: 768px) {
-    min-height: 150px; /* Sesuaikan buat mobile */
+  @media (max-width: 767px) {
+    min-height: 150px;
+  }
+
+  @media (min-width: 768px) {
+    min-height: 287px;
   }
 `;
 
