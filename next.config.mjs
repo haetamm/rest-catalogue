@@ -1,3 +1,5 @@
+import withPWA from "next-pwa";
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -9,14 +11,34 @@ const nextConfig = {
   },
 };
 
-import { createRequire } from 'node:module';
-const require = createRequire(import.meta.url);
-const withPWA = require('next-pwa')({
-  dest: 'public', // Output directory for service worker files
-  register: true, // Automatically register service worker
-  skipWaiting: true, // Make new service worker active immediately
-  disable: process.env.NODE_ENV === 'development', // Disable PWA in development
-});
-
-// Export wrapped config
-export default withPWA(nextConfig);
+export default withPWA({
+  dest: "public",
+  register: true,
+  skipWaiting: true,
+  disable: process.env.NODE_ENV === "development",
+  buildExcludes: [/app-build-manifest\.json$/, /dynamic-css-manifest\.json$/,],
+  runtimeCaching: [
+    {
+      urlPattern: /^https?.*/,
+      handler: "NetworkFirst",
+      options: {
+        cacheName: "offlineCache",
+        expiration: {
+          maxEntries: 200,
+          maxAgeSeconds: 24 * 60 * 60,
+        },
+      },
+    },
+    {
+      urlPattern: /\.(?:js|css|png|jpg|jpeg|svg|woff2)$/,
+      handler: "CacheFirst",
+      options: {
+        cacheName: "static-assets",
+        expiration: {
+          maxEntries: 100,
+          maxAgeSeconds: 30 * 24 * 60 * 60,
+        },
+      },
+    },
+  ],
+})(nextConfig);
