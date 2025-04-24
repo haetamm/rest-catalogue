@@ -104,8 +104,12 @@ export const NavItem = styled.li`
     display: inline-block;
     font-size: 1.38em;
     text-decoration: none;
-    color: ${({ isScrolled }) =>
-      isScrolled ? 'var(--secondary-color)' : 'var(--primary-color)'};
+    color: ${({ isScrolled, isActive }) =>
+      isActive
+        ? '#b0c4de'
+        : isScrolled
+          ? 'var(--secondary-color)'
+          : 'var(--primary-color)'};
   }
 
   button {
@@ -115,7 +119,7 @@ export const NavItem = styled.li`
     color: ${({ isScrolled }) =>
       isScrolled ? 'var(--secondary-color)' : 'var(--primary-color)'};
     cursor: pointer;
-    font-size: 1.38;
+    font-size: 1.38em;
     vertical-align: middle;
 
     svg {
@@ -127,7 +131,8 @@ export const NavItem = styled.li`
   @media only screen and (max-width: 600px) {
     a {
       padding: 1.3em;
-      color: var(--secondary-color);
+      color: ${({ isActive }) =>
+        isActive ? '#b0c4de' : 'var(--secondary-color)'};
     }
 
     button {

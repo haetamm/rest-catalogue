@@ -6,11 +6,14 @@ import useScroll from '@/lib/hooks/useScroll';
 import { VscClose } from 'react-icons/vsc';
 import Link from 'next/link';
 import { AppContext } from '@/lib/context/AppContext';
+import { isActive, navLinks } from '@/lib/utils';
+import { useRouter } from 'next/router';
 
 const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isScrolled = useScroll();
   const { theme, toggleTheme } = useContext(AppContext);
+  const { pathname } = useRouter();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -30,26 +33,22 @@ const NavBar = () => {
       </MenuHp>
 
       <NavList className={isMenuOpen ? 'nav-list-block' : ''}>
-        <NavItem isScrolled={isScrolled}>
-          <Link href="/">Home</Link>
-        </NavItem>
-        <NavItem isScrolled={isScrolled}>
-          <Link
-            href="#
-          /favorite"
-          >
-            FavoriTe
-          </Link>
-        </NavItem>
-        <NavItem isScrolled={isScrolled}>
-          <Link
-            href="https://github.com/firmanjabar/nongkis"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            AbouT Us
-          </Link>
-        </NavItem>
+        {navLinks.map(({ label, href, external }, index) => {
+          const active = isActive(href, pathname);
+          return (
+            <NavItem isScrolled={isScrolled} key={index} isActive={active}>
+              <Link
+                href={href}
+                {...(external
+                  ? { target: '_blank', rel: 'noopener noreferrer' }
+                  : {})}
+              >
+                {label}
+              </Link>
+            </NavItem>
+          );
+        })}
+
         <NavItem isScrolled={isScrolled}>
           <button
             onClick={toggleTheme}

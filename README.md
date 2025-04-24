@@ -1,4 +1,5 @@
 - **Restaurant List and Details**: Displays a list of restaurants
+- **Favorite Restaurants**: Displays a list of restaurants saved as favorites, stored locally in IndexedDB 
 - **Four Rendering Modes**:
   - **SSR** (`/ssr/:id`): Fetches data from the API on every request, ideal for frequently changing content.
   - **SSG** (`/ssg/:id`): Generates pages at build time for fast, static content delivery.

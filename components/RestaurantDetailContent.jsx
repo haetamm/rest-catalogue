@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Layout from '@/components/layouts/index';
 import TitleContainer from '@/components/styled/TitleContainer';
@@ -6,6 +6,9 @@ import DetailRestaurant from '@/components/DetailRestaurant';
 import Menus from '@/components/Menus';
 import Review from '@/components/Review';
 import FormReview from './FormReview';
+import { ButtonLike } from './styled/ButtonLike';
+import { GrFavorite } from 'react-icons/gr';
+import { isFavorite, toggleFavorite } from '@/lib/indexedDB';
 
 const RestaurantDetailContent = ({ restaurant }) => {
   const {
@@ -21,9 +24,24 @@ const RestaurantDetailContent = ({ restaurant }) => {
     menus: { foods, drinks },
   } = restaurant;
 
+  const [liked, setLiked] = useState(false);
   const [customerReviews, setCustomerReviews] = useState(initialReviews);
+
+  useEffect(() => {
+    const checkFavorite = async () => {
+      const fav = await isFavorite(id);
+      setLiked(fav);
+    };
+    checkFavorite();
+  }, [id]);
+
   const handleReviewAdded = (newReviews) => {
     setCustomerReviews(newReviews);
+  };
+
+  const handleLikeToggle = async () => {
+    const newStatus = await toggleFavorite(restaurant);
+    setLiked(newStatus);
   };
 
   return (
@@ -39,6 +57,14 @@ const RestaurantDetailContent = ({ restaurant }) => {
         address={address}
       />
       <Menus foods={foods} drinks={drinks} />
+      <ButtonLike
+        $liked={liked}
+        onClick={handleLikeToggle}
+        aria-label="like this restaurant"
+        id="likeButton"
+      >
+        <GrFavorite />
+      </ButtonLike>
       <Review customerReviews={customerReviews} />
       <FormReview id={id} onReviewAdded={handleReviewAdded} />
     </Layout>

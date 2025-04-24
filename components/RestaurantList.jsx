@@ -10,7 +10,7 @@ const RestaurantList = ({ restaurants }) => {
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
-    }, 1000);
+    }, 100);
   }, []);
 
   return (
@@ -19,9 +19,13 @@ const RestaurantList = ({ restaurants }) => {
         <LoadingSpinner />
       ) : (
         <ListRest>
-          {restaurants.map((restaurant) => (
-            <RestaurantCard key={restaurant.id} {...restaurant} />
-          ))}
+          {restaurants.length > 0 ? (
+            restaurants.map((restaurant) => (
+              <RestaurantCard key={restaurant.id} {...restaurant} />
+            ))
+          ) : (
+            <p>You don&apos;t have any Favorite Cafe or Restaurant</p>
+          )}
         </ListRest>
       )}
     </>
